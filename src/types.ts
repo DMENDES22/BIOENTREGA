@@ -14,6 +14,7 @@ export interface DeliveryOccurrence {
   receiverName?: string;
   photo?: string; // Base64 representation or mock image key
   notes?: string;
+  signature?: string; // Base64 digital signature
 }
 
 export interface Delivery {
@@ -31,6 +32,7 @@ export interface Delivery {
   receiverName?: string;
   photo?: string; // Base64 delivery proof
   gpsLocation?: GPSLocation;
+  signature?: string; // Base64 digital signature
   occurrences: DeliveryOccurrence[];
 }
 

@@ -101,7 +101,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
   const getStatusColor = (status: DeliveryStatus) => {
     switch (status) {
       case 'PENDENTE': return 'bg-amber-100 text-amber-800 border-amber-200';
-      case 'EM_ROTA': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'EM_ROTA': return 'bg-biomig-light text-biomig-navy border-biomig-lime/30';
       case 'ENTREGUE': return 'bg-emerald-100 text-emerald-800 border-emerald-200';
       case 'PROBLEMA': return 'bg-rose-100 text-rose-800 border-rose-200';
     }
@@ -121,10 +121,10 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
       {/* Admin Header */}
       <div className="mb-8 flex flex-col justify-between gap-4 border-b border-slate-200 pb-6 md:flex-row md:items-center">
         <div>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-biomig-light px-3 py-1 text-xs font-black text-biomig-navy border border-biomig-lime/25 shadow-xs">
             Painel de Controle Interno
           </span>
-          <h2 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+          <h2 className="mt-1.5 text-2xl font-black tracking-tight text-slate-900 md:text-3xl">
             Admin: {adminName}
           </h2>
           <p className="text-sm text-slate-500">
@@ -135,16 +135,16 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveTab('create')}
-            className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-[0.98]"
+            className="flex items-center gap-2 rounded-xl bg-biomig-navy px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-biomig-hover hover:shadow-md hover:shadow-biomig-navy/25 cursor-pointer active:scale-[0.98]"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-4 w-4 text-biomig-lime" />
             Nova Entrega
           </button>
           <button
             onClick={onLogout}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition-all hover:bg-slate-50 active:scale-[0.98]"
+            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 transition-all hover:bg-slate-50 active:scale-[0.98] cursor-pointer"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="h-4 w-4 text-rose-500" />
             Sair
           </button>
         </div>
@@ -154,40 +154,40 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
       <div className="mb-6 flex border-b border-slate-200">
         <button
           onClick={() => setActiveTab('dashboard')}
-          className={`border-b-2 py-3 px-4 text-sm font-medium transition-colors ${
+          className={`border-b-2 py-3 px-4 text-sm transition-colors cursor-pointer ${
             activeTab === 'dashboard'
-              ? 'border-blue-600 text-blue-600'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
+              ? 'border-biomig-lime text-biomig-navy font-black'
+              : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
           }`}
         >
           <div className="flex items-center gap-2">
-            <ClipboardList className="h-4 w-4" />
+            <ClipboardList className="h-4 w-4 text-biomig-lime" />
             Painel Geral
           </div>
         </button>
         <button
           onClick={() => setActiveTab('create')}
-          className={`border-b-2 py-3 px-4 text-sm font-medium transition-colors ${
+          className={`border-b-2 py-3 px-4 text-sm transition-colors cursor-pointer ${
             activeTab === 'create'
-              ? 'border-blue-600 text-blue-600'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
+              ? 'border-biomig-lime text-biomig-navy font-black'
+              : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
           }`}
         >
           <div className="flex items-center gap-2">
-            <PlusCircle className="h-4 w-4" />
+            <PlusCircle className="h-4 w-4 text-biomig-lime" />
             Cadastrar Entrega
           </div>
         </button>
         <button
           onClick={() => setActiveTab('history')}
-          className={`border-b-2 py-3 px-4 text-sm font-medium transition-colors ${
+          className={`border-b-2 py-3 px-4 text-sm transition-colors cursor-pointer ${
             activeTab === 'history'
-              ? 'border-blue-600 text-blue-600'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
+              ? 'border-biomig-lime text-biomig-navy font-black'
+              : 'border-transparent text-slate-500 hover:text-slate-800 font-medium'
           }`}
         >
           <div className="flex items-center gap-2">
-            <History className="h-4 w-4" />
+            <History className="h-4 w-4 text-biomig-lime" />
             Histórico de Ocorrências
           </div>
         </button>
@@ -214,12 +214,12 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
               <p className="mt-2 font-mono text-2xl font-bold text-amber-800">{stats.pending}</p>
             </div>
 
-            <div className="rounded-xl border border-blue-200 bg-blue-50/20 p-4 shadow-sm">
-              <div className="flex items-center justify-between text-blue-600">
-                <span className="text-xs font-semibold uppercase tracking-wider text-blue-500">Em Rota</span>
-                <Truck className="h-5 w-5" />
+            <div className="rounded-xl border border-biomig-lime bg-biomig-light/25 p-4 shadow-sm">
+              <div className="flex items-center justify-between text-biomig-navy">
+                <span className="text-xs font-semibold uppercase tracking-wider text-biomig-navy opacity-80">Em Rota</span>
+                <Truck className="h-5 w-5 text-biomig-lime" />
               </div>
-              <p className="mt-2 font-mono text-2xl font-bold text-blue-800">{stats.inRoute}</p>
+              <p className="mt-2 font-mono text-2xl font-black text-biomig-navy">{stats.inRoute}</p>
             </div>
 
             <div className="rounded-xl border border-emerald-200 bg-emerald-50/20 p-4 shadow-sm">
@@ -258,7 +258,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Pesquisar NF, cliente..."
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-4 text-xs outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-4 text-xs outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light"
                   />
                 </div>
 
@@ -267,7 +267,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 py-2 pl-3 pr-8 text-xs font-medium text-slate-600 outline-none transition-all focus:border-blue-500 focus:bg-white"
+                    className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 py-2 pl-3 pr-8 text-xs font-medium text-slate-600 outline-none transition-all focus:border-biomig-navy focus:bg-white"
                   >
                     <option value="TODOS">Status: Todos</option>
                     <option value="PENDENTE">Pendente</option>
@@ -282,7 +282,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                   <select
                     value={driverFilter}
                     onChange={(e) => setDriverFilter(e.target.value)}
-                    className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 py-2 pl-3 pr-8 text-xs font-medium text-slate-600 outline-none transition-all focus:border-blue-500 focus:bg-white"
+                    className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 py-2 pl-3 pr-8 text-xs font-medium text-slate-600 outline-none transition-all focus:border-biomig-navy focus:bg-white"
                   >
                     <option value="TODOS">Motorista: Todos</option>
                     {driversList.map(driver => (
@@ -370,8 +370,8 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
       {activeTab === 'create' && (
         <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
           <div className="mb-6 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-              <PlusCircle className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-biomig-light text-biomig-navy border border-biomig-lime/20">
+              <PlusCircle className="h-5 w-5 text-biomig-lime" />
             </div>
             <div>
               <h3 className="font-sans text-lg font-bold text-slate-900">
@@ -391,7 +391,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                 className="flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-100 p-3.5 text-sm font-semibold text-emerald-800"
               >
                 <Check className="h-5 w-5 text-emerald-600" />
-                Entrega registrada com sucesso no painel BioEntregas!
+                Entrega registrada com sucesso no sistema Biomig!
               </motion.div>
             )}
 
@@ -412,7 +412,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                   placeholder="Ex: 003256"
                   value={nfNumber}
                   onChange={(e) => setNfNumber(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100 font-mono"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-mono font-medium"
                   id="input-nf"
                 />
               </div>
@@ -427,7 +427,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                   min="1"
                   value={volumes}
                   onChange={(e) => setVolumes(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100 font-mono"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-mono font-medium"
                   id="input-volumes"
                 />
               </div>
@@ -443,7 +443,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                 placeholder="Ex: Hospital das Clínicas Setor B"
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-medium"
                 id="input-cliente"
               />
             </div>
@@ -462,7 +462,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   rows={2}
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-medium"
                   id="input-endereco"
                 />
               </div>
@@ -479,7 +479,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                 <select
                   value={assignedDriver}
                   onChange={(e) => setAssignedDriver(e.target.value)}
-                  className="w-full cursor-pointer rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm font-medium text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white"
+                  className="w-full cursor-pointer rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm font-medium text-slate-700 outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light"
                   id="select-motorista"
                 >
                   {driversList.map(driver => (
@@ -498,7 +498,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                 value={observations}
                 onChange={(e) => setObservations(e.target.value)}
                 rows={3}
-                className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 px-3.5 text-sm outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-medium"
                 id="input-observacoes"
               />
             </div>
@@ -506,11 +506,11 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
             <div className="pt-2">
               <button
                 type="submit"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-md"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-biomig-navy py-3 text-sm font-bold text-white transition-all hover:bg-biomig-hover active:scale-[0.98] shadow-md hover:shadow-lg hover:shadow-biomig-navy/20 cursor-pointer"
                 id="btn-confirmar-cadastro"
               >
                 Cadastrar Remessa Interna
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 text-biomig-lime" />
               </button>
             </div>
           </form>
@@ -550,7 +550,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                         <div className="flex flex-col items-center">
                           <div className={`mt-1 h-2 w-2 rounded-full ${
                             oc.status === 'ENTREGUE' ? 'bg-emerald-500' :
-                            oc.status === 'EM_ROTA' ? 'bg-blue-500' :
+                            oc.status === 'EM_ROTA' ? 'bg-biomig-lime' :
                             oc.status === 'PROBLEMA' ? 'bg-rose-500' : 'bg-slate-400'
                           }`} />
                           {i < delivery.occurrences.length - 1 && (
@@ -571,7 +571,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                           <p className="mt-0.5 text-slate-600 pr-4">{oc.notes || 'Sem comentários adicionais.'}</p>
                           
                           {/* Receipt Data display */}
-                          {(oc.receiverName || oc.location || oc.photo) && (
+                          {(oc.receiverName || oc.location || oc.photo || oc.signature) && (
                             <div className="mt-2 rounded-lg bg-white border border-slate-200 p-2.5 max-w-md space-y-1.5 shadow-xs">
                               {oc.receiverName && (
                                 <p className="text-[11px] text-slate-700">
@@ -588,7 +588,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                                     href={`https://www.google.com/maps/search/?api=1&query=${oc.location.latitude},${oc.location.longitude}`} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-0.5 font-bold text-blue-600 hover:underline"
+                                    className="inline-flex items-center gap-0.5 font-bold text-biomig-navy hover:text-biomig-lime hover:underline"
                                   >
                                     Ver no Mapa <ExternalLink className="h-2.5 w-2.5" />
                                   </a>
@@ -607,6 +607,20 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                                       (e.target as HTMLElement).style.display = 'none';
                                     }}
                                   />
+                                </div>
+                              )}
+
+                              {oc.signature && (
+                                <div className="mt-1.5 border-t border-slate-100 pt-1.5">
+                                  <p className="text-[10px] uppercase font-bold text-slate-400 mb-1">Assinatura Digital:</p>
+                                  <div className="inline-block rounded-lg border border-slate-250 bg-slate-50 p-1">
+                                    <img 
+                                      src={oc.signature} 
+                                      alt="Assinatura Digital" 
+                                      className="max-h-16 h-12 object-contain"
+                                      referrerPolicy="no-referrer"
+                                    />
+                                  </div>
                                 </div>
                               )}
                             </div>
@@ -677,7 +691,7 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                         <div className="flex flex-col items-center">
                           <div className={`mt-1 h-2 w-2 rounded-full ${
                             occ.status === 'ENTREGUE' ? 'bg-emerald-500' :
-                            occ.status === 'EM_ROTA' ? 'bg-blue-500' :
+                            occ.status === 'EM_ROTA' ? 'bg-biomig-lime' :
                             occ.status === 'PROBLEMA' ? 'bg-rose-500' : 'bg-slate-400'
                           }`} />
                           {idx < selectedDelivery.occurrences.length - 1 && (
@@ -715,6 +729,20 @@ export default function AdminDashboard({ deliveries, onCreateDelivery, onLogout,
                                 alt="Foto ocorrência" 
                                 className="max-h-40 rounded-lg border border-slate-200 object-contain shadow-xs bg-slate-100"
                               />
+                            </div>
+                          )}
+
+                          {occ.signature && (
+                            <div className="mt-2 pl-1">
+                              <p className="text-[10px] uppercase font-bold text-slate-400 mb-1">Assinatura Digital:</p>
+                              <div className="inline-block rounded-lg border border-slate-200 bg-slate-55 p-1 mt-0.5">
+                                <img 
+                                  src={occ.signature} 
+                                  alt="Assinatura Digital" 
+                                  className="max-h-24 h-16 object-contain"
+                                  referrerPolicy="no-referrer"
+                                />
+                              </div>
                             </div>
                           )}
                         </div>

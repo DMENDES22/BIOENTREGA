@@ -62,16 +62,25 @@ export default function LoginForm({ onLogin, drivers }: LoginFormProps) {
         className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl"
         id="login-card"
       >
-        {/* Brand Banner */}
-        <div className="bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 px-6 py-8 text-center text-white">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
-            <Truck className="h-7 w-7 text-white" />
+        {/* Brand Banner with Biomig styling */}
+        <div className="relative bg-gradient-to-tr from-biomig-navy via-slate-900 to-biomig-navy px-6 py-8 text-center text-white border-b-4 border-biomig-lime">
+          {/* Biomig logo brand simulation using SVG and Typography */}
+          <div className="mx-auto mb-2 flex flex-col items-center justify-center">
+            {/* Green curved swooshes mimicking biomig leaf logo arches */}
+            <svg className="h-6 w-24 text-biomig-lime mb-1" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M10 18 Q 50 2 90 15" />
+              <path d="M25 18 Q 55 8 85 18" strokeWidth="1.5" opacity="0.6" />
+            </svg>
+            <div className="flex items-baseline">
+              <span className="font-sans text-3.5xl font-black tracking-tight text-white lowercase">biomig</span>
+            </div>
+            <span className="text-[10px] font-extrabold tracking-widest text-[#98c30c] uppercase ml-14 -mt-1.5 font-sans">
+              Brasil
+            </span>
           </div>
-          <h1 className="font-sans text-2xl font-bold tracking-tight uppercase">
-            BioEntregas
-          </h1>
-          <p className="mt-1 text-xs text-blue-100 font-medium">
-            Controle de Logística & Entregas Internas
+          
+          <p className="mt-2 text-[11px] text-slate-300 font-bold uppercase tracking-wider">
+            LOGÍSTICA & ENTREGAS INTERNAS
           </p>
         </div>
 
@@ -134,7 +143,7 @@ export default function LoginForm({ onLogin, drivers }: LoginFormProps) {
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(''); }}
                   placeholder="usuario@bioentregas.com"
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100 font-sans"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-sans font-medium"
                 />
               </div>
             </div>
@@ -152,18 +161,18 @@ export default function LoginForm({ onLogin, drivers }: LoginFormProps) {
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setError(''); }}
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100 font-sans"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-sans font-medium"
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-md hover:shadow-lg hover:shadow-blue-600/10 cursor-pointer"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-biomig-navy py-3 text-sm font-bold text-white transition-all hover:bg-biomig-hover active:scale-[0.98] shadow-md hover:shadow-lg hover:shadow-biomig-navy/20 cursor-pointer"
               id="btn-entrar"
             >
               Entrar no Sistema
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 text-biomig-lime" />
             </button>
           </form>
 
@@ -181,19 +190,19 @@ export default function LoginForm({ onLogin, drivers }: LoginFormProps) {
             <button
               type="button"
               onClick={() => handleQuickLogin('admin@bioentregas.com', 'ADMIN', 'Coordenação Geral')}
-              className="flex w-full items-center justify-between rounded-xl border border-blue-100 bg-blue-50/50 p-3 text-left transition-all hover:bg-blue-50 hover:border-blue-200 active:scale-[0.99] group cursor-pointer"
+              className="flex w-full items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 p-3 text-left transition-all hover:bg-biomig-light/40 hover:border-biomig-lime/30 active:scale-[0.99] group cursor-pointer"
               id="btn-login-admin"
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-biomig-navy text-white shadow-sm shadow-biomig-navy/10">
                   <Shield className="h-4.5 w-4.5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-slate-800">Administrativo</h4>
+                  <h4 className="text-xs font-black text-slate-800">Administrativo</h4>
                   <p className="text-[10px] text-slate-500 font-mono">admin@bioentregas.com (admin123)</p>
                 </div>
               </div>
-              <ArrowRight className="h-4 w-4 text-blue-500 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight className="h-4 w-4 text-biomig-navy transition-transform group-hover:translate-x-0.5" />
             </button>
 
             {drivers.map((drv) => (
@@ -201,19 +210,19 @@ export default function LoginForm({ onLogin, drivers }: LoginFormProps) {
                 key={drv.email}
                 type="button"
                 onClick={() => handleQuickLogin(drv.email, 'DRIVER', drv.name)}
-                className="flex w-full items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50/30 p-3 text-left transition-all hover:bg-emerald-50/70 hover:border-emerald-200 active:scale-[0.99] group cursor-pointer"
+                className="flex w-full items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 p-3 text-left transition-all hover:bg-biomig-light/40 hover:border-biomig-lime/30 active:scale-[0.99] group cursor-pointer"
                 id={`btn-login-${drv.name.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white shadow-sm">
-                    <Truck className="h-4.5 w-4.5" />
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-biomig-lime text-white shadow-sm shadow-biomig-lime/15">
+                    <Truck className="h-4.5 w-4.5 text-biomig-navy" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-800">Motorista: {drv.name}</h4>
+                    <h4 className="text-xs font-black text-slate-800">Motorista: {drv.name}</h4>
                     <p className="text-[10px] text-slate-500 font-mono">{drv.email} (motorista123)</p>
                   </div>
                 </div>
-                <ArrowRight className="h-4 w-4 text-emerald-600 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="h-4 w-4 text-biomig-lime transition-transform group-hover:translate-x-0.5" />
               </button>
             ))}
           </div>

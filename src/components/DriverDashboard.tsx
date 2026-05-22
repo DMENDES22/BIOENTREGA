@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Delivery, DeliveryStatus, GPSLocation } from '../types';
+import SignaturePad from './SignaturePad';
 
 interface DriverDashboardProps {
   deliveries: Delivery[];
@@ -16,7 +17,8 @@ interface DriverDashboardProps {
     notes?: string, 
     receiverName?: string, 
     gpsLocation?: GPSLocation, 
-    photo?: string
+    photo?: string,
+    signature?: string
   ) => void;
   onLogout: () => void;
 }
@@ -27,6 +29,7 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
   const [notes, setNotes] = useState('');
   const [receiverName, setReceiverName] = useState('');
   const [capturedPhoto, setCapturedPhoto] = useState<string>('');
+  const [signature, setSignature] = useState<string>('');
   
   // Geolocation state
   const [isCapturingGps, setIsCapturingGps] = useState(false);
@@ -132,6 +135,11 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
       return;
     }
 
+    if (statusUpdateMode === 'ENTREGUE' && !signature) {
+      alert('Por favor, colha a assinatura digital do recebedor.');
+      return;
+    }
+
     let defaultNote = '';
     if (statusUpdateMode === 'EM_ROTA') defaultNote = 'Iniciou percurso rodoviário de transporte';
     if (statusUpdateMode === 'ENTREGUE') defaultNote = `Mercadoria entregue e aceita no destino.`;
@@ -143,22 +151,28 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
       notes || defaultNote,
       receiverName,
       gpsData || undefined,
-      capturedPhoto || undefined
+      capturedPhoto || undefined,
+      signature || undefined
     );
 
     // Refresh model view
     setSelectedDelivery(null);
+    statusUpdateModeReset();
+  };
+
+  const statusUpdateModeReset = () => {
     setStatusUpdateMode(null);
     setNotes('');
     setReceiverName('');
     setCapturedPhoto('');
+    setSignature('');
     setGpsData(null);
   };
 
   const getStatusBadge = (status: DeliveryStatus) => {
     switch (status) {
       case 'PENDENTE': return 'bg-amber-100 text-amber-800 border-amber-200';
-      case 'EM_ROTA': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'EM_ROTA': return 'bg-biomig-light text-biomig-navy border-biomig-lime/30';
       case 'ENTREGUE': return 'bg-emerald-100 text-emerald-800 border-emerald-200';
       case 'PROBLEMA': return 'bg-rose-100 text-rose-800 border-rose-200';
     }
@@ -176,14 +190,14 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
   return (
     <div className="mx-auto max-w-md px-4 py-6 font-sans">
       {/* Mobile-First Driver Frame Header */}
-      <div className="mb-6 flex items-center justify-between rounded-2xl bg-slate-900 p-4 text-white shadow-md">
+      <div className="mb-6 flex items-center justify-between rounded-2xl bg-slate-900 p-4 text-white shadow-md border-b-2 border-biomig-lime">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600">
-            <Truck className="h-5 w-5 text-white" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-biomig-navy border border-biomig-lime/30">
+            <Truck className="h-5 w-5 text-biomig-lime" />
           </div>
           <div>
             <h2 className="text-sm font-bold tracking-tight">{driverName}</h2>
-            <p className="text-[10px] uppercase font-bold text-slate-400">Motorista</p>
+            <p className="text-[10px] uppercase font-bold text-slate-400">Motorista Colaborador</p>
           </div>
         </div>
         <button
@@ -243,7 +257,7 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
                     {/* Visual left bar color accent */}
                     <div className={`absolute top-0 bottom-0 left-0 w-1.5 ${
                       delivery.status === 'PENDENTE' ? 'bg-amber-400' :
-                      delivery.status === 'EM_ROTA' ? 'bg-blue-500' :
+                      delivery.status === 'EM_ROTA' ? 'bg-biomig-lime' :
                       delivery.status === 'ENTREGUE' ? 'bg-emerald-500' : 'bg-rose-500'
                     }`} />
 
@@ -258,7 +272,7 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
                         </span>
                       </div>
 
-                      <h4 className="font-sans text-sm font-bold text-slate-800 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                      <h4 className="font-sans text-sm font-bold text-slate-800 line-clamp-1 group-hover:text-biomig-navy transition-colors">
                         {delivery.clientName}
                       </h4>
                       <p className="text-xs text-slate-500 line-clamp-1 mt-0.5 leading-tight">
@@ -287,7 +301,7 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
             {/* Go Back handle */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <button
-                onClick={() => { setSelectedDelivery(null); setStatusUpdateMode(null); }}
+                onClick={() => { setSelectedDelivery(null); statusUpdateModeReset(); }}
                 className="flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-950"
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -354,10 +368,10 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
                   {selectedDelivery.status === 'PENDENTE' && (
                     <button
                       onClick={() => setStatusUpdateMode('EM_ROTA')}
-                      className="flex items-center justify-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50 py-2.5 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-colors"
+                      className="flex items-center justify-center gap-1.5 rounded-xl border border-biomig-lime bg-biomig-light/60 py-2.5 text-xs font-bold text-biomig-navy hover:bg-biomig-light transition-colors cursor-pointer"
                       id="btn-status-em-rota"
                     >
-                      <Play className="h-3.5 w-3.5 fill-blue-700" />
+                      <Play className="h-3.5 w-3.5 fill-biomig-navy text-biomig-navy" />
                       Entrar em Rota
                     </button>
                   )}
@@ -410,27 +424,35 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
                     Fluxo: {statusUpdateMode === 'ENTREGUE' ? 'Dar Baixa com Sucesso' : 'Reportar Problema'}
                   </span>
                   <button 
-                    onClick={() => setStatusUpdateMode(null)}
-                    className="text-slate-400 hover:text-white"
+                    onClick={statusUpdateModeReset}
+                    className="text-slate-400 hover:text-white cursor-pointer"
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </div>
 
-                {/* Receiver name is STRICTLY REQUIRED for complete success */}
+                {/* Receiver name and signature pad is STRICTLY REQUIRED for complete success */}
                 {statusUpdateMode === 'ENTREGUE' && (
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-                      Nome do Recebedor <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Nome legível de quem recebeu"
-                      value={receiverName}
-                      onChange={(e) => setReceiverName(e.target.value)}
-                      className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2 px-3 text-xs outline-none transition-all focus:border-emerald-500 focus:bg-white"
-                      id="input-recebedor"
+                  <div className="space-y-3.5">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                        Nome do Recebedor <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Nome legível de quem recebeu"
+                        value={receiverName}
+                        onChange={(e) => setReceiverName(e.target.value)}
+                        className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2 px-3 text-xs outline-none transition-all focus:border-emerald-500 focus:bg-white"
+                        id="input-recebedor"
+                      />
+                    </div>
+
+                    {/* DIGITALLY SIGN CANVAS COMPONENT */}
+                    <SignaturePad
+                      onSave={setSignature}
+                      onClear={() => setSignature('')}
                     />
                   </div>
                 )}
@@ -498,7 +520,7 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
                       <button
                         type="button"
                         onClick={simulatePhotoCapture}
-                        className="inline-flex h-8 items-center gap-1 rounded-lg border border-blue-100 bg-blue-50 px-2 text-[10px] font-bold text-blue-700 hover:bg-blue-100"
+                        className="inline-flex h-8 items-center gap-1 rounded-lg border border-biomig-lime bg-biomig-light px-2 text-[10px] font-bold text-biomig-navy hover:bg-biomig-light/85 cursor-pointer shadow-xs"
                         title="Gerar foto de recibo fictício para teste rápido"
                       >
                         <Camera className="h-3.5 w-3.5" /> Simular
@@ -541,15 +563,15 @@ export default function DriverDashboard({ deliveries, driverName, onUpdateStatus
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <button
                     type="button"
-                    onClick={() => setStatusUpdateMode(null)}
-                    className="rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                    onClick={statusUpdateModeReset}
+                    className="rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer"
                   >
                     Cancelar
                   </button>
                   <button
                     type="button"
                     onClick={handleSubmitStatusChange}
-                    className="flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 py-2.5 text-xs font-bold text-white hover:bg-slate-800 transition-colors shadow-md"
+                    className="flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 py-2.5 text-xs font-bold text-white hover:bg-slate-800 transition-colors shadow-md cursor-pointer"
                     id="btn-salvar-ocorrencia"
                   >
                     <Check className="h-3.5 w-3.5 text-emerald-400" />

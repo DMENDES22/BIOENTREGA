@@ -279,7 +279,8 @@ export default function App() {
     notes?: string, 
     receiverName?: string, 
     gpsLocation?: GPSLocation, 
-    photo?: string
+    photo?: string,
+    signature?: string
   ) => {
     const timeNow = new Date().toISOString();
     const newOccId = `occ-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
@@ -290,7 +291,8 @@ export default function App() {
       notes,
       location: gpsLocation,
       receiverName,
-      photo
+      photo,
+      signature
     };
 
     if (isRealFirebase) {
@@ -322,6 +324,9 @@ export default function App() {
         if (gpsLocation) {
           updatedFields.gpsLocation = gpsLocation;
         }
+        if (signature) {
+          updatedFields.signature = signature;
+        }
 
         await updateDoc(docRef, updatedFields as any);
       } catch (err) {
@@ -342,6 +347,7 @@ export default function App() {
             receiverName: receiverName || del.receiverName,
             photo: photo || del.photo,
             gpsLocation: gpsLocation || del.gpsLocation,
+            signature: signature || del.signature,
             occurrences: updatedOccurrences
           };
         });
@@ -380,12 +386,12 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 text-slate-800" id="main-app">
       {/* Simulation/Demo Helper Header Bar */}
       {showSimulatorBar && (
-        <div className="border-b border-blue-200 bg-gradient-to-r from-slate-900 to-slate-800 text-white font-sans">
+        <div className="border-b border-biomig-lime/30 bg-gradient-to-r from-biomig-navy to-slate-999 text-white font-sans">
           <div className="mx-auto max-w-7xl px-4 py-2 flex flex-col sm:flex-row items-center justify-between gap-2.5">
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-300">
-              <Layers className="h-4 w-4 text-blue-400 animate-spin-slow" />
+              <Layers className="h-4 w-4 text-biomig-lime animate-spin-slow" />
               <span>LOGÍSTICA DE PERFIS DE TESTE:</span>
-              <span className="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded border border-blue-400/30">
+              <span className="text-[10px] bg-biomig-lime/20 text-biomig-lime px-1.5 py-0.5 rounded border border-biomig-lime/30">
                 Atalhos Rápidos
               </span>
             </div>
@@ -396,7 +402,7 @@ export default function App() {
                 onClick={() => triggerQuickUserSwitch('ADMIN', 'Coordenação Geral', 'admin@bioentregas.com')}
                 className={`rounded-lg px-2.5 py-1 font-bold transition-all flex items-center gap-1 active:scale-95 cursor-pointer ${
                   currentUser?.role === 'ADMIN' && !isRealFirebase
-                    ? 'bg-blue-600 text-white shadow-sm'
+                    ? 'bg-biomig-lime text-biomig-navy shadow-sm'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
                 id="toggle-simulator-admin"
@@ -415,7 +421,7 @@ export default function App() {
                     onClick={() => triggerQuickUserSwitch('DRIVER', drv.name, drv.email)}
                     className={`rounded-lg px-2.5 py-1 font-bold transition-all flex items-center gap-1 active:scale-95 cursor-pointer ${
                       isSelected
-                        ? 'bg-emerald-600 text-white shadow-sm'
+                        ? 'bg-biomig-lime text-biomig-navy shadow-sm font-black'
                         : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                     }`}
                     id={`toggle-simulator-driver-${drv.name.toLowerCase().replace(/\s+/g, '-')}`}
@@ -450,17 +456,18 @@ export default function App() {
       )}
 
       {/* Styled Top Header with Menu config menu button */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+      <header className="bg-white border-b-2 border-biomig-lime sticky top-0 z-30 shadow-xs">
         <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9.5 w-9.5 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-600/10">
-              <Truck className="h-5 w-5" />
+            <div className="h-9.5 w-9.5 rounded-xl bg-biomig-navy flex items-center justify-center text-white shadow-sm shadow-biomig-navy/20">
+              <Truck className="h-5 w-5 text-biomig-lime" />
             </div>
-            <div>
-              <h1 className="font-sans text-sm font-black uppercase tracking-wider text-slate-900">
-                BioEntregas
-              </h1>
-              <p className="text-[10px] text-slate-400 font-bold -mt-0.5">Rastreamento de Carga Interna</p>
+            <div className="flex flex-col">
+              <div className="flex items-baseline leading-none">
+                <span className="font-sans text-lg font-black text-biomig-navy lowercase">biomig</span>
+                <span className="text-[9px] font-black text-[#98c30c] uppercase ml-1">Brasil</span>
+              </div>
+              <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Rastreamento e Logística</p>
             </div>
           </div>
 
@@ -521,8 +528,8 @@ export default function App() {
               {/* Drawer Header */}
               <div className="p-6 border-b border-slate-200/60 bg-slate-50/50 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="h-9 w-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <UserPlus className="h-4.5 w-4.5" />
+                  <div className="h-9 w-9 rounded-lg bg-biomig-light text-biomig-navy flex items-center justify-center border border-biomig-lime/20 animate-pulse">
+                    <UserPlus className="h-4.5 w-4.5 text-biomig-lime" />
                   </div>
                   <div>
                     <h3 className="font-bold text-slate-900">Configurações Gerais</h3>
@@ -542,8 +549,8 @@ export default function App() {
               <div className="flex-1 overflow-y-auto p-6 space-y-6">
                 {/* Form to Create New Driver */}
                 <div className="rounded-2xl border border-slate-200/80 bg-white p-4 space-y-3.5 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-blue-600 font-bold text-xs uppercase tracking-wider">
-                    <UserPlus className="h-4 w-4" />
+                  <div className="flex items-center gap-1.5 text-biomig-navy font-bold text-xs uppercase tracking-wider">
+                    <UserPlus className="h-4 w-4 text-biomig-lime" />
                     <span>Cadastrar Novo Motorista</span>
                   </div>
 
@@ -558,7 +565,7 @@ export default function App() {
                         placeholder="Ex: Douglas Santos"
                         value={newDriverName}
                         onChange={(e) => setNewDriverName(e.target.value)}
-                        className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2 px-3 text-xs outline-none transition-all focus:border-blue-500 focus:bg-white"
+                        className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2 px-3 text-xs outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-medium"
                         id="new-driver-name"
                       />
                     </div>
@@ -570,10 +577,10 @@ export default function App() {
                       <input
                         type="email"
                         required
-                        placeholder="Ex: doug@bioentregas.com"
+                        placeholder="Ex: doug@biomig.com"
                         value={newDriverEmail}
                         onChange={(e) => setNewDriverEmail(e.target.value)}
-                        className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2 px-3 text-xs outline-none transition-all focus:border-blue-500 focus:bg-white font-sans"
+                        className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2 px-3 text-xs outline-none transition-all focus:border-biomig-navy focus:bg-white focus:ring-2 focus:ring-biomig-light font-sans font-medium"
                         id="new-driver-email"
                       />
                     </div>
@@ -588,10 +595,10 @@ export default function App() {
 
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2.5 cursor-pointer shadow-sm active:scale-[0.98] transition-all"
+                      className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-biomig-navy hover:bg-biomig-hover text-white font-bold text-xs py-2.5 cursor-pointer shadow-sm active:scale-[0.98] transition-all"
                       id="btn-add-driver"
                     >
-                      <Plus className="h-3.5 w-3.5" /> Adicionar à Frota
+                      <Plus className="h-3.5 w-3.5 text-biomig-lime" /> Adicionar à Frota
                     </button>
                   </form>
                 </div>
